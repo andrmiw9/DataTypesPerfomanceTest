@@ -20,7 +20,7 @@ class Student:
 
 def test1_2_iter():
     """
-    Запускает 4 теста для 4 типов данных, размер структур указывается в sizik
+    (неактуальная функция) Запускает 4 теста на итерируемость для 4 типов данных, размер структур указывается в sizik
     :return: None
     """
     sizik = 100_000
@@ -76,11 +76,17 @@ def test1_iter():
     :return: None
     """
     sizik = 100_000
+    data_types = []
 
     listik = [i for i in range(sizik)]
     tuplik = tuple(listik)
     setik = set(listik)
     frzsetik = frozenset(listik)
+
+    data_types.append(listik)
+    data_types.append(tuplik)
+    data_types.append(setik)
+    data_types.append(frzsetik)
 
     iterations = 1000
     print(
@@ -89,24 +95,17 @@ def test1_iter():
 
     print('\nТестирование на итерируемость:')
     f = test_iterating
-    test1_helper_iter(f, listik, sizik, iterations)
-    test1_helper_iter(f, tuplik, sizik, iterations)
-    test1_helper_iter(f, setik, sizik, iterations)
-    test1_helper_iter(f, frzsetik, sizik, iterations)
+    for dtype in data_types:
+        test1_helper_iter(f, dtype, sizik, iterations)
 
-    iterations = 1000
     print('\nТестирование на поиск элемента:')
     f = test_lookups
-    test1_helper_iter(f, listik, sizik, iterations)
-    test1_helper_iter(f, tuplik, sizik, iterations)
-    test1_helper_iter(f, setik, sizik, iterations)
-    test1_helper_iter(f, frzsetik, sizik, iterations)
+    for dtype in data_types:
+        test1_helper_iter(f, dtype, sizik, iterations)
 
     print('\nРазмеры для каждого обьекта (в байтах):')
-    print(type(listik), ': ', sys.getsizeof(listik))
-    print(type(tuplik), ': ', sys.getsizeof(tuplik))
-    print(type(setik), ': ', sys.getsizeof(setik))
-    print(type(frzsetik), ': ', sys.getsizeof(frzsetik))
+    for dtype in data_types:
+        print(type(dtype), ': ', sys.getsizeof(dtype))
 
     pass
 
@@ -120,6 +119,7 @@ if __name__ == '__main__':
     # Поиск элемента в set и frozenset существенно быстрее (на 2 порядка для моей конфигурации)
     # Обьем памяти, занятой set и frozenset, существенно больше, чем у list и tuple (в 5 раз для моей конфигурации)
 
+    # Для ручного тестирования:
     # sizik = 100_000
 
     # listik = [i for i in range(sizik)]
